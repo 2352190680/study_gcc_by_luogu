@@ -1,0 +1,1 @@
+    // int ns=0;string r=0;cout<<r+r;
