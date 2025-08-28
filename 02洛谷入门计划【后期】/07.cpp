@@ -98,7 +98,8 @@ int main(){
         }
     }
     for (int i=1;i<=x;++i){
-        for (int j=1;j<=y;++j){int max=0;
+        for (int j=1;j<=y;++j){
+            int max=0;
             for (int k=1;k<=x;++k){
                 for (int m=1;m<=y;++m){
                     if (l[i][j]==l[k][m]){

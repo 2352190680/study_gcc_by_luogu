@@ -53,6 +53,12 @@
         "streambuf": "cpp",
         "text_encoding": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "barrier": "cpp",
+        "chrono": "cpp",
+        "latch": "cpp",
+        "semaphore": "cpp",
+        "valarray": "cpp",
+        "complex": "cpp"
     }
 }
