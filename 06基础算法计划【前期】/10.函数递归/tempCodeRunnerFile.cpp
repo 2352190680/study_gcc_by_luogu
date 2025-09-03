@@ -1,1 +1,0 @@
-return m(l,x)%max(m(x+1,r),7ll)+a[x]-1;
