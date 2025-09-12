@@ -5,18 +5,15 @@
 using namespace std;
 string s;long long n;
 int main(){
-    cin>>s>>n;
-    long long l=s.length();
-    int k=n%l;int a=n/l;
-    if (k==0){
-        if (a%l==0)cout<<s[0];
-        else cout<<s[l-a%l];
+    cin>>s>>n;int l=s.length();
+    while (n>l){
+        long long t=l;
+        while (t*2<n){
+            t*=2;
+        }
+        n=n-t-1;
+        if (n==0)n=t;
     }
-    else{
-        
-    }
-
-
-
+    cout<<s[n-1];
     return 0;
 }
