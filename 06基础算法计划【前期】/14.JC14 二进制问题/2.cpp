@@ -1,3 +1,4 @@
+//古籍翻译
 #include <bits/stdc++.h>
 using namespace std;
 char s[100005];
@@ -8,7 +9,7 @@ int jisuan10(int l, int r) {
     return n;
 }
 void dabao(int len) {
-    int left= max(0, len - 4);
+    int left= max(0, len - 4);  //四个一组，8^4=16^3;4->3个数
     int n = jisuan10(left, len);
     if(left) {
         dabao(left);//嵌套，跟外星密码类似很妙
