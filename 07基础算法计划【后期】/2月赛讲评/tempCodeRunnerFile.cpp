@@ -1,0 +1,1 @@
+sum+=((long long)floor(b[1]*1.0/b[2]) * (long long)floor(b[1]*1.0/b[3]) * (long long)floor(b[2]*1.0/b[3])) % N;
