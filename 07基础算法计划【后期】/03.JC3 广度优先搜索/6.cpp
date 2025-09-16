@@ -4,58 +4,58 @@
 #include<algorithm>
 #include<queue>
 using namespace std;
-int n,m,x1,y11,x2,y2;int lst[20][20];int vis[20][20];
-struct jl{
-    int x,y;
-    jl(int ax=0,int ay=0){
-        x=ax,y=ay;
+int n,m,x,y,x2,y2;int lst[20][20];int flag[20][20];int jing[300][3];bool p=false;
+void dfs(int x,int y,int ci){
+    jing[ci][1]=x,jing[ci][2]=y;
+    if (x==x2&&y==y2){
+        p=true;
+        for (int i=1;i<=ci-1;++i){
+            printf("(%d,%d)->",jing[i][1],jing[i][2]);
+        }
+        printf("(%d,%d)\n",jing[ci][1],jing[ci][2]);
+        return;
     }
-};
-void bfs(int x1,int y11){
-    queue<jl>q;
-    queue<jl>p;
-    q.push(jl(x1,y11));p.push(jl(x1,y11));
-    while (!q.empty()){
-        jl t=q.front();
-        q.pop();
-        int x=t.x,y=t.y;
-        if (x<1||x>n){
-            p.pop();continue;
-        }
-        if (y<1||y>m){
-            p.pop();continue;
-        }
-        vis[x][y]=1;
-        if (x==x2&&y==y2){
-            queue<jl> pp = p;
-            while(!pp.empty()){
-                printf("(%d,%d)",pp.front().x,pp.front().y);
-                vis[p.front().x][p.front().y]=0;
-                pp.pop();
-                if (!pp.empty()){
-                    cout<<"->";
-                }
-            }
-            cout<<endl;
-            p.pop();
-            continue;
-        }
-        if (lst[x+1][y]!=0&&vis[x+1][y]!=1){q.push(jl(x+1,y));p.push(jl(x+1,y));}
-        if (lst[x-1][y]!=0&&vis[x-1][y]!=1){q.push(jl(x-1,y));p.push(jl(x-1,y));}
-        if (lst[x][y+1]!=0&&vis[x][y+1]!=1){q.push(jl(x,y+1));p.push(jl(x,y+1));}
-        if (lst[x][y-1]!=0&&vis[x][y-1]!=1){q.push(jl(x,y-1));p.push(jl(x,y-1));}
+    if (flag[x+1][y]==1&&flag[x-1][y]==1&&flag[x][y-1]==1&&flag[x][y+1]==1){
+        return;
+    }
+    flag[x][y]=1;
+    if (flag[x][y-1]!=1){
+        dfs(x,y-1,ci+1);
+        flag[x][y-1]=0;
+    }
+    if (flag[x-1][y]!=1){
+        dfs(x-1,y,ci+1);
+        flag[x-1][y]=0;
+    }
+    if (flag[x][y+1]!=1){
+        dfs(x,y+1,ci+1);
+        flag[x][y+1]=0;
+    }
+    if (flag[x+1][y]!=1){
+        dfs(x+1,y,ci+1);
+        flag[x+1][y]=0;
     }
 }
 int main(){
     cin>>n>>m;
+    for (int i=0;i<=n+1;++i){
+        flag[i][0]=1;flag[i][m+1]=1;
+    }
+    for (int i=0;i<=m+1;++i){
+        flag[0][i]=1;flag[n+1][i]=1;
+    }
     for (int i=1;i<=n;++i){
         for (int j=1;j<=m;++j){
             cin>>lst[i][j];
+            if (lst[i][j]==0){
+                flag[i][j]=1;
+            }
         }
     }
-    cin>>x1>>y11>>x2>>y2;
-    bfs(x1,y11);
-
-
+    cin>>x>>y>>x2>>y2;
+    dfs(x,y,1);
+    if (p==false){
+        cout<<-1;
+    }
     return 0;
 }
