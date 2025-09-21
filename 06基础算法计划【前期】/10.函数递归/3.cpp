@@ -33,7 +33,5 @@ int main(){
 
     cin>>n;
     dfs(1);
-
-
     return 0;
 }
