@@ -1,3 +1,4 @@
+//dijkstra堆优化或者spfa
 #include<iostream>
 #include<cmath>
 #include<string>
@@ -32,7 +33,7 @@ void bfs(int x,int y){
                 d[next_node]=step+1;
                 //更新数据
                 b[next_node]=b[num];
-                //继承上一层的最短路径
+                //继承上一层的最短路径数目
                 q.push(dis(next_node,step+1));
             }
             else if(d[next_node]==step+1){//相同时，不进入队列
