@@ -7,48 +7,71 @@
 #include<queue>
 using namespace std;
 int n,m,s,t;
-int ceng[10001];
-int degree[10001];
-bool can[10001];
 vector<int>fa[10001];
-vector<int>son[10001];
+int degree[10001];
+int ceng[10001];
+bool vis[10001];
+bool pd[10001];
+void bfs_safe(int x){
+    queue<int>q;
+    q.push(x);
+    pd[x]=1;//用bfs能避免dfs的重复计数  使不安全变为安全
+    while(!q.empty()){
+        int z=q.front();q.pop();
+        for (int i=0;i<fa[z].size();++i){
+            int y=fa[z][i];
+            degree[y]--;//同时确保是否安全
+            if (!pd[y]){
+                pd[y]=1;q.push(y);
+            }
+        }
+    }
+}//牛的，多加一个判断就行了
+void bfs(int x){
+    queue<int>q;
+    q.push(x);
+    vis[x]=true; 
+    while(!q.empty()){
+        int y=q.front();q.pop();
+        for (int i=0;i<fa[y].size();++i){
+            int yy=fa[y][i];
+            if (!degree[yy]&&!vis[yy]){
+                vis[yy]=true;    
+                q.push(yy);
+                ceng[yy]=ceng[y]+1;
+                if (yy==s)return;
+            }
+        }
+    }
+}
 int main(){
     cin>>n>>m;
     for (int i=1;i<=m;++i){
         int x,y;cin>>x>>y;
-        fa[y].push_back(x);son[x].push_back(y);
+        fa[y].push_back(x);
         degree[x]++;
     }
-    cin>>s>>t;
-    queue<int>q;
-    q.push(t);
     memset(ceng,0x7f,sizeof(ceng));
-    ceng[t]=0;
-    while(!q.empty()){
-        int tt=q.front();q.pop();
-        for (int i=0;i<fa[tt].size();++i){
-            degree[fa[tt][i]]--;
-            if(degree[fa[tt][i]]==0){
-                int mini=0x7f7f7f7f;
-                for (int j=0;j<son[fa[tt][i]].size();++j){
-                    mini=min(mini,ceng[son[fa[tt][i]][j]]+1);
-                }
-                ceng[fa[tt][i]]=mini;
-                vis[fa[tt][i]]=1;
-                q.push(fa[tt][i]);
-            }
-            else if (!vis[fa[tt][i]])q.push(fa[tt][i]);
-        }
+    cin>>s>>t;ceng[t]=0;
+    bfs_safe(t);
+    bfs(t);
+    if (ceng[s]!=0x7f7f7f7f){
+        cout<<ceng[s];
     }
-    if (ceng[s]!=0x7f7f7f7f)cout<<ceng[s];
-    else cout<<-1;
+    else{
+        cout<<-1;
+    }
     return 0;
 }
 /*
-4 4
-3 4
-4 2
-2 3
+5 8
+1 2
+1 2
 2 1
-4 1
-*/
+2 4
+2 3
+4 3
+3 5
+4 5
+1 5
+ */

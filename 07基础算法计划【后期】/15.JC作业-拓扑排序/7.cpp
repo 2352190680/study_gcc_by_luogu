@@ -1,3 +1,4 @@
+//跟6为同一题
 #include<iostream>
 #include<cmath>
 #include<string>
@@ -57,6 +58,8 @@ int main(){
             }
         }
     }
+    //以上可以只用dfs结束，毕竟能到就蕴含了诸多条件，dfs时入度为0时说明了满足
+
     // 步骤3: 在安全点上做BFS求最短路
     if (!can_reach_t[s]) { // 如果起点不安全，无解
         cout << -1 << endl;
